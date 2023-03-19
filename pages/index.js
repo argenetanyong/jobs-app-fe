@@ -6,6 +6,12 @@ import { Button } from "@mantine/core";
 
 const inter = Inter({ subsets: ["latin"] });
 
+import SearchJobs from "../components/SearchJobs";
+
 export default function Home() {
-  return <></>;
+  return (
+    <>
+      <SearchJobs />
+    </>
+  );
 }
