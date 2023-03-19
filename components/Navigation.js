@@ -66,7 +66,7 @@ const useStyles = createStyles((theme) => ({
 
 function Navigation() {
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState("/about");
+  const [active, setActive] = useState("");
   const { classes, cx } = useStyles();
 
   const links = [
@@ -104,7 +104,7 @@ function Navigation() {
 
   return (
     <>
-      <Header height={60} mb={120}>
+      <Header height={60} mb={60}>
         <Container className={classes.header}>
           <MantineLogo size={28} />
           <Group spacing={5} className={classes.links}>
