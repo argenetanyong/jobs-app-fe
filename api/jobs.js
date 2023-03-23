@@ -14,6 +14,20 @@ const list = async () => {
   }
 };
 
+const create = async (data) => {
+  try {
+    const res = await mainAxios({
+      method: "post",
+      url: `${moduleName}`,
+      data,
+    });
+    return res.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
 export default {
   list,
+  create,
 };

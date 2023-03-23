@@ -1,61 +1,87 @@
+import { z } from "zod";
+import { useForm, zodResolver } from "@mantine/form";
+
 import {
-  createStyles,
-  rem,
-  Container,
   TextInput,
+  NumberInput,
   TextArea,
   Button,
+  Box,
+  Group,
 } from "@mantine/core";
 
+import jobsApi from "../api/jobs";
+
+const schema = z.object({
+  title: z.string().min(2, { message: "Name should have at least 2 letters" }),
+  skills: z.string().min(2, { message: "Name should have at least 2 letters" }),
+  description: z
+    .string()
+    .min(2, { message: "Name should have at least 2 letters" }),
+  budget: z.number(),
+  contact_email: z.string().email({ message: "Invalid email" }),
+});
+
 function AddJobForm() {
+  const form = useForm({
+    validate: zodResolver(schema),
+    initialValues: {
+      title: "",
+      skills: "",
+      description: "",
+      age: 18,
+      contact_email: "",
+    },
+  });
+
   return (
-    <div>
-      <Container sx={{ maxWidth: "500px" }}>
-        <TextInput label="Title" placeholder="Title" />
+    <Box maw={340} mx="auto">
+      <form onSubmit={form.onSubmit((data) => jobsApi.create(data))}>
+        <TextInput
+          label="Title"
+          placeholder="Title"
+          {...form.getInputProps("title")}
+        />
 
         <TextInput
           sx={{ marginTop: "10px" }}
           label="Skills"
           placeholder="IT, People Handling, Graphic Design... "
+          {...form.getInputProps("skills")}
         />
 
         <TextInput
           sx={{ marginTop: "10px" }}
           label="Description"
           placeholder="Job description, qualification goes here... "
+          {...form.getInputProps("description")}
         />
 
-        <TextInput
+        <NumberInput
           sx={{ marginTop: "10px" }}
           label="Set your budget"
-          placeholder="$10"
+          hideControls
+          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+          formatter={(value) =>
+            !Number.isNaN(parseFloat(value))
+              ? `$ ${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+              : "$ "
+          }
+          {...form.getInputProps("budget")}
         />
 
         <TextInput
           sx={{ marginTop: "10px" }}
           label="Contact email"
           placeholder="Your email here... "
+          {...form.getInputProps("contact_email")}
         />
-        <Container
-          sx={{
-            display: "flex",
-            justifyContent: "right",
-            marginTop: "10px",
-            padding: "0",
-          }}
-        >
-          <Button>Submit</Button>
-        </Container>
-        {/* <Select
-        mt="md"
-        withinPortal
-        data={["React", "Angular", "Svelte", "Vue"]}
-        placeholder="Pick one"
-        label="Your favorite library/framework"
-        classNames={classes}
-      /> */}
-      </Container>
-    </div>
+
+        <Group position="right" mt="xl">
+          <Button type="submit">Submit</Button>
+        </Group>
+      </form>
+    </Box>
   );
 }
 
