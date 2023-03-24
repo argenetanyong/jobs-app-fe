@@ -2,14 +2,16 @@ import { mainAxios } from "../configs/axios";
 
 const moduleName = "jobs";
 
-const list = async () => {
+const list = async (params) => {
   try {
     const res = await mainAxios({
       method: "get",
       url: `${moduleName}`,
+      params: params,
     });
     return res.data;
   } catch (err) {
+    console.log("err", err);
     return err.response.data;
   }
 };

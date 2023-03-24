@@ -29,8 +29,9 @@ function AddJobForm() {
       title: "",
       skills: "",
       description: "",
-      age: 18,
+      budget: 0,
       contact_email: "",
+      tech: "",
     },
   });
 
@@ -38,12 +39,14 @@ function AddJobForm() {
     <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((data) => jobsApi.create(data))}>
         <TextInput
+          size="lg"
           label="Title"
           placeholder="Title"
           {...form.getInputProps("title")}
         />
 
         <TextInput
+          size="lg"
           sx={{ marginTop: "10px" }}
           label="Skills"
           placeholder="IT, People Handling, Graphic Design... "
@@ -51,6 +54,7 @@ function AddJobForm() {
         />
 
         <TextInput
+          size="lg"
           sx={{ marginTop: "10px" }}
           label="Description"
           placeholder="Job description, qualification goes here... "
@@ -58,6 +62,7 @@ function AddJobForm() {
         />
 
         <NumberInput
+          size="lg"
           sx={{ marginTop: "10px" }}
           label="Set your budget"
           hideControls
@@ -71,6 +76,7 @@ function AddJobForm() {
         />
 
         <TextInput
+          size="lg"
           sx={{ marginTop: "10px" }}
           label="Contact email"
           placeholder="Your email here... "

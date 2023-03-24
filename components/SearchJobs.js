@@ -1,6 +1,11 @@
+import { useState } from "react";
+
+import Router from "next/router";
 import { Card, Container, Group, Button, Text, TextInput } from "@mantine/core";
 
 function SearchJobs() {
+  const [seachText, setSearchText] = useState("");
+
   return (
     <>
       <Container sx={{ maxWidth: "700px" }}>
@@ -11,10 +16,24 @@ function SearchJobs() {
 
           <TextInput
             placeholder="Type job title, skills here... "
-            withAsterisk
+            onChange={(event) => {
+              setSearchText(event.target.value);
+            }}
           />
 
-          <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+          <Button
+            variant="light"
+            color="blue"
+            fullWidth
+            mt="md"
+            radius="md"
+            onClick={() => {
+              Router.push({
+                pathname: "/all-jobs",
+                query: { search: seachText },
+              });
+            }}
+          >
             Search jobs
           </Button>
         </Card>
